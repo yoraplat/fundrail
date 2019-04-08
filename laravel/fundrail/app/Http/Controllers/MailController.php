@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -16,7 +17,6 @@ class MailController extends Controller
      * @param  int  $id
      * @return Response
      */
-
     public function getMailPage() {
         return view('emails.mail');
     }
@@ -25,14 +25,15 @@ class MailController extends Controller
     {
         $data = [
             'title'=>'title here',
-            'content'=>'simple content'
+            'content'=>'simple content',
+            'database'=>'img/database.png'
         ];
     
         Mail::send('emails.welcome',$data, function ($message){
     
             $message->to('yoram.platteeuw@telenet.be', 'Yoram');
             $message->subject('Welcome!');
-            $message->from('fundrail.com');
+            $message->from('welcome@sandboxc2b0a7b7b7f04450a6f1fe028cf7fdd7.mailgun.org');
         });
     
     return redirect('mail');
