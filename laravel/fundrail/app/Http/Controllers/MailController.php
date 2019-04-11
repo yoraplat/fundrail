@@ -21,6 +21,8 @@ class MailController extends Controller
         return view('emails.mail');
     }
 
+    // Email versturen
+
     public function sendEmailWelcome()
     {
         $data = [

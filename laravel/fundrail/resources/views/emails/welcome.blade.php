@@ -17,7 +17,7 @@
 </style>
 <body>
     <h1>Welcome to FundRail!</h1>
-    <h2>Get your funds back on the rail</h2>
+    <h2>Get your funds on the rail</h2>
     <ul>
         <li><p>Git repo: <a href="https://github.com/yoraplat/fundrail" target="_blank">Fundrail</a></p></li>
         <li>
