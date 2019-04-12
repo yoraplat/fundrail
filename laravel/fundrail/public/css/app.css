@@ -11653,6 +11653,11 @@ a.text-dark:focus {
   margin-top: -35px;
 }
 
+#sub-nav-container {
+  margin-top: -50px;
+  margin-bottom: 40px;
+}
+
 #content-container .actions {
   margin-top: 20px;
   margin-bottom: 50px;

@@ -28,7 +28,7 @@ class DashboardController extends Controller
         $projects = Project::select('*', \DB::raw("projects.id as projectId"))
                 ->join('users', 'projects.user_id', '=', 'users.id')
                 ->where('users.id', '=', $id)
-                ->paginate(15);
+                ->paginate(5);
 
         
         return view('pages.dashboard', ['projects' => $projects]);

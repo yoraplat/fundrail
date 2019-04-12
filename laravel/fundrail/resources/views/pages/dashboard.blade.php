@@ -3,6 +3,7 @@
 @include('includes.header')
     <body>
     @include('includes.nav')
+    @include('includes.subnav')
         <div class="container" id="showcase-container">
         <div class="row">
             <div class="col-8"><h2>My Projects</h2></div>

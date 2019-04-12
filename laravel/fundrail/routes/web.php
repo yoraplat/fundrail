@@ -36,5 +36,13 @@ Route::post('/create-project', 'DashboardController@createProject')->name('post-
 Route::post('/save-project/{id}', 'DashboardController@saveProject')->name('save-project');
 Route::get('/delete-project/{projectId}', 'DashboardController@deleteProject')->name('delete-project');
 
+// Get all user packages
+Route::get('/packages', 'PackageController@getPackages')->name('get-packages');
+Route::get('/new-package', 'PackageController@newPackage')->name('new-package');
+Route::get('/edit-package/{id}', 'PackageController@editPackage')->name('edit-package');
+Route::post('/create-package', 'PackageController@createPackage')->name('post-new-package');
+Route::post('/save-package/{id}', 'PackageController@savePackage')->name('save-package');
+Route::get('/delete-package/{packageId}', 'PackageController@deletePackage')->name('delete-package');
+
 // Logout
 Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
