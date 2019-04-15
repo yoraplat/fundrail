@@ -13,8 +13,8 @@
             <div class="border">
                 <div class="row">
                     <div class="col-6"><h5>{{ $package->title }}</h5></div>
-                    <div class="col-3 text-right"><a href="./edit-package/{{ $package->id }}" class="btn btn-primary">Edit</a></div>
-                    <div class="col-3"><a href="./delete-package/{{ $package->id }}" class="btn btn-danger">Delete</a></div>
+                    <div class="col-3 text-right"><a href="./edit-package/{{ $package->packageId }}" class="btn btn-primary">Edit</a></div>
+                    <div class="col-3"><a href="./delete-package/{{ $package->packageId }}" class="btn btn-danger">Delete</a></div>
                 </div>
                 <div class="row">
                     <div class="col-12"><p>{{ $package->description }} </p></div>

@@ -26,7 +26,7 @@ Auth::routes();
 
 // Get Projects
 Route::get('/projects', 'ProjectsController@getProjects')->name('projects');
-Route::get('/project/{id}', 'ProjectsController@getProjectById')->name('projectById');
+Route::get('/project/{projectId}', 'ProjectsController@getProjectById')->name('projectById');
 
 // Get User Dashboard
 Route::get('/dashboard', 'DashboardController@getDashboard')->name('user-dashboard');
@@ -42,7 +42,14 @@ Route::get('/new-package', 'PackageController@newPackage')->name('new-package');
 Route::get('/edit-package/{id}', 'PackageController@editPackage')->name('edit-package');
 Route::post('/create-package', 'PackageController@createPackage')->name('post-new-package');
 Route::post('/save-package/{id}', 'PackageController@savePackage')->name('save-package');
-Route::get('/delete-package/{packageId}', 'PackageController@deletePackage')->name('delete-package');
+Route::get('/delete-package/{id}', 'PackageController@deletePackage')->name('delete-package');
 
 // Logout
 Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
+
+// Funds
+Route::get('/funds', 'FundsController@getFunds')->name('get-funds');
+Route::post('/add-funds', 'FundsController@addFunds')->name('add-funds');
+
+// Project Funds
+Route::post('/add-project-funds', 'FundsController@addProjectFunds')->name('add-project-funds');

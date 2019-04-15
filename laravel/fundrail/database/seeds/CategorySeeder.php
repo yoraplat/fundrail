@@ -3,19 +3,15 @@
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class DatabaseSeeder extends Seeder
+class CategorySeeder extends Seeder
 {
     /**
-     * Seed the application's database.
+     * Run the database seeds.
      *
      * @return void
      */
     public function run()
     {
-        factory(App\Project::class, 50)->create();
-        factory(App\User::class, 100)->create();
-        
-        
         DB::table('categories')->insert([
             'name' => "Tools",
         ]);

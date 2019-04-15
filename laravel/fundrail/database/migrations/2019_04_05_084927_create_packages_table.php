@@ -17,6 +17,7 @@ class CreatePackagesTable extends Migration
             $table->increments('id');
             $table->string('title');
             $table->integer('credit_amount');
+            $table->integer('creator_id');
             $table->string('description');
             $table->integer('project_id');
             $table->timestamps();

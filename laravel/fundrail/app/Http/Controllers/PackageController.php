@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Package;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class PackageController extends Controller
 {
@@ -13,12 +15,31 @@ class PackageController extends Controller
     }
 
     public function getPackages() {
+        $id = Auth::id();
+        
+        $packages = DB::table('packages')
+                ->select('*', \DB::raw('packages.id as packageId'))
+                ->join('users', 'packages.creator_id', '=', 'users.id')
+                ->where('users.id', '=', $id)
+                ->get();
+                
+                /*
         $packages = Package::all();
+        */
+
         return view('pages.packages', ['packages' => $packages]);
+
     }
 
     public function newPackage() {
-        return view('pages.new-package');
+        $userId = Auth::id();
+        $projects = DB::table('projects')
+        ->select('*', \DB::raw('projects.id as projectId'))
+        ->join('users', 'projects.user_id', '=', 'users.id')
+        ->where('projects.user_id', '=', $userId )
+        ->get();
+
+        return view('pages.new-package', ['projects' => $projects]);
     }
 
     public function createPackage(Request $request) {
@@ -38,6 +59,7 @@ class PackageController extends Controller
         $package->description = $request->input('description');
         $package->project_id = $request->input('projectId');
         $package->credit_amount = $request->input('credits');
+        $package->creator_id = Auth::id();
         $package->save();
 
         return redirect()->route('get-packages');
@@ -45,21 +67,31 @@ class PackageController extends Controller
 
 
     public function deletePackage($id) {
-        $package = Package::find($id);
+        $package = Package::findOrFail($id);
         $package->delete();
         
         return redirect()->route('get-packages');
     }
 
     public function editPackage($id) {
-        
+        $userId = Auth::id();
+
         $package = Package::find($id);
+        $package->select('*');
         $package->get();
-        return view('pages.edit-package', ['package' => $package]);
+
+        $projects = DB::table('projects')
+        ->select('*', \DB::raw('projects.id as projectId'))
+        ->join('users', 'projects.user_id', '=', 'users.id')
+        ->where('projects.user_id', '=', $userId )
+        ->get();
+        
+
+        return view('pages.edit-package',['projects' => $projects],   ['package' => $package]);
     }
 
     public function savePackage(Request $request, $id) {
-
+        
         $package = Package::findOrFail($id);
         
         

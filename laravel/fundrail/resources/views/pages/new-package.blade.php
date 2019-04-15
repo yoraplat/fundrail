@@ -26,11 +26,14 @@
                 <div class="form-group">
                     <label for="projectId">Package for:</label>
                     <select name="projectId" id="projectId">
-                        <option value="1">Project 1</option>
+                    @foreach ($projects as $project)
+                        <option value="{{ $project->projectId }}">{{ $project->title }}</option>
+                    @endforeach
                     </select>
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
+            <h2>ADD PROJECTS</h2>
         </div>
     </body>
 </html>

@@ -13,13 +13,15 @@
         @foreach ($projects as $project)
             <div class="border">
                 <div class="row">
-                    <div class="col-6"><h5>{{ $project->title}}</h5></div>
-                    <div class="col-3 text-right"><a href="./edit-project/{{ $project->projectId }}" class="btn btn-primary">Edit</a></div>
-                    <div class="col-3"><a href="./delete-project/{{ $project->projectId }}" class="btn btn-danger">Delete</a></div>
+                    <div class="col"><h5>{{ $project->title}}</h5></div>
+                    <div class="col"><a href="./project/{{ $project->projectId }}" class="btn btn-primary">View Project</a></div>
+                    <div class="col"><a href="./edit-project/{{ $project->projectId }}" class="btn btn-primary">Edit</a></div>
+                    <div class="col"><a href="./delete-project/{{ $project->projectId }}" class="btn btn-danger">Delete</a></div>
                 </div>
+                
                 <div class="row">
                     <div class="col-12"><p>Description {{ $project->description}}</p></div>
-                </div>
+                </div>  
             </div>
         @endforeach
         {{ $projects->links() }}

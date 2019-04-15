@@ -45,14 +45,13 @@
                 <div class="form-group">
                     <label for="category">Category</label>
                     <select name="category" id="category">
-                        <option value="1">CAT1</option>
-                        <option value="2">CAT2</option>
-                        <option value="3">CAT3</option>
-                        <option value="4">CAT4</option>
+                    @foreach ($categories as $category)
+                        <option value="{{ $category->id }}">{{ $category->name }}</option>
+                        @endforeach
                     </select>
                 </div>
+                
 
-                <h1>ADD PACKAGES</h1>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
         </div>

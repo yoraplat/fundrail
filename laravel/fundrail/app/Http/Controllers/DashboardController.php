@@ -35,7 +35,12 @@ class DashboardController extends Controller
     }
 
     public function newProject() {
-        return view('pages.new-project');
+
+        $categories = DB::table('categories')
+        ->select('*')
+        ->get();
+
+        return view('pages.new-project', ['categories' => $categories]);
     }
 
     public function createProject(Request $request) {
@@ -47,7 +52,7 @@ class DashboardController extends Controller
             'intro' => 'required|max:255',
             'content' => 'required|max:255',
             'category' => 'required',
-            'credits' => 'required',
+            'credits' => 'required|integer',
             'time' => 'required',
         ]);
         
@@ -82,7 +87,12 @@ class DashboardController extends Controller
         $id = $projectId;
         $project = Project::find($id);
         $project->get();
-        return view('pages.edit-project', ['project' => $project]);
+
+        $categories = DB::table('categories')
+        ->select('*')
+        ->get();
+
+        return view('pages.edit-project', ['project' => $project], ['categories' => $categories]);
     }
 
     public function saveProject(Request $request, $id) {
@@ -94,7 +104,7 @@ class DashboardController extends Controller
             'intro' => 'required|max:255',
             'content' => 'required|max:255',
             'category' => 'required',
-            'credits' => 'required',
+            'credits' => 'required|integer',
             
         ]);
 
