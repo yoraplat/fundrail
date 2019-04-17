@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use App\Project;
+use App\ImageProject;
+use App\Image;
 use Carbon\Carbon;
 
 class DashboardController extends Controller
@@ -54,12 +56,16 @@ class DashboardController extends Controller
             'category' => 'required',
             'credits' => 'required|integer',
             'time' => 'required',
+            // 'image' => 'image|mimes:jpeg,png,jpg,gif,svg',
         ]);
         
 
         $user = auth()->user();
         $userId = $user->id;
         $currentTime = Carbon::now();
+
+        
+
         $project = new Project();
 
         $project->title = $request->input('title');
@@ -73,7 +79,42 @@ class DashboardController extends Controller
         $project->initial_time = $currentTime;
         $project->save();
 
-        return redirect('/dashboard');
+
+        // Get multiple image file
+        /*
+        if ($request->hasFile('image'))
+        {
+            foreach($request->file('image') as $image)
+            {
+                $name=$image->getClientOriginalName();
+                $image->move(public_path().'/img/', $name);  
+                $data[] = $name;  
+            }
+        }
+        */
+
+        $images = new Image();
+        $images->title = $currentTime;
+        if ($request->hasFile('image'))
+        {
+            $images->path = $request->file('image')->store('img');
+        } else {
+            $images->path = 'No File';
+        }
+
+        $images->save();
+
+
+        // Save image project image (multiple)
+        $projectImages = new ImageProject();
+        $projectImages->project_id = $project->id;
+        $projectImages->image_id = $images->id;
+        $projectImages->save();
+
+
+        return redirect()->route('user-dashboard');
+
+        
     }
 
     public function deleteProject($id) {

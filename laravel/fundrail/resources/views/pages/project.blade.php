@@ -36,12 +36,18 @@
                     DON'T FUND OWN PROJECTS
                     -->   
 
+
+                    <!--
+                    Controller is only taking first package price
+                    -->
+
                     @if (null != Auth::check())
                     
                     <form method="POST" action="{{route('add-project-funds') }}">
                         {{ csrf_field() }}
+                        
                         <input type="hidden" id="packageId" name="packageId" value="{{$package->packageId}}" >
-                        <div class="col-4"><button class="btn btn-primary">Fund</button></div>
+                        <div class="col-4"><button class="btn btn-primary" name="form{{ $package->packageId }}">Fund</button></div>
                         @isset($message)
                         <div class="col-4">{{ $message }}</div>
                         @endisset

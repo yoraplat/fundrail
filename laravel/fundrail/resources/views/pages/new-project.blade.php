@@ -7,7 +7,7 @@
             <div class="row">
                 <div class="col-8"><h2>New Project</h2></div>
             </div>
-            <form method="POST" action="{{ route('post-new-project') }}">
+            <form method="POST" action="{{ route('post-new-project') }}" enctype="multipart/form-data">
             {{ csrf_field() }}
                 <div class="form-group">
                     <label for="title">Title</label>
@@ -29,7 +29,8 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="images" class="btn btn-secondary">Add Images</label>
+                <label for="image">Add Images</label>
+                    <input type="file" name="image">
                 </div>
                 
                 <div class="form-group">

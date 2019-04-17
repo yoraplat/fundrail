@@ -54,9 +54,15 @@ class FundsController extends Controller
 
         // Get total credits of user
         $currentFunds = User::findOrFail($userId)->select('credits')->first();
-        $packageCost = Package::findOrFail( $request->input('packageId'))->select('credit_amount')->first();
+        
+        // Get package price
+        $packageCost = Package::findOrFail( $request->input('packageId'))
+        ->select('credit_amount')
+        ->where('id', '=', $request->input('packageId') )
+        ->first();
         
         $user = User::findOrFail($userId);
+
         
         if ($currentFunds->credits >= $packageCost->credit_amount ) {
             $sponsor = new Sponsor();
@@ -69,7 +75,7 @@ class FundsController extends Controller
             $user->save();
 
 
-            return redirect()->route('projects');
+            return redirect()->back();
         } else {
             return redirect()->back();
         }
