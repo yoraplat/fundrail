@@ -27,4 +27,12 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    const ADMIN_TYPE = 1;
+    const USER_TYPE = 2;
+    const GUEST_TYPE = 3;
+    
+    public function isAdmin()    {        
+        return $this->role_type === self::ADMIN_TYPE;    
+    }
 }

@@ -57,3 +57,5 @@ Route::post('/add-project-funds', 'FundsController@addProjectFunds')->name('add-
 // Delete Images
 Route::get('/delete-image/{id}', 'ProjectsController@deleteImage')->name('delete-images');
 
+// Backoffice
+Route::get('/admin', 'Backoffice\AdminController@admin')->name('admin');

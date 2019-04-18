@@ -59,15 +59,19 @@ class ProjectsController extends Controller
         ->toArray();
 
         $images = array();
-        foreach($projectImages as $image)
+
+
+        if (!$images)
         {
-            $imageId = $image->imageId;
-            
-            $imageFound = Image::find($imageId);
-            
-            // Remove img folder from url
-            $images[] = str_replace('img/', '', $imageFound->path);
+            foreach($projectImages as $image)
+            {
+                $imageId = $image->imageId;
+                $imageFound = Image::find($imageId);   
+                // Remove img folder from url
+                $images[] = str_replace('img/', '', $imageFound->path);
+            }
         }
+        
 
 /*
         $images = DB::table('images')

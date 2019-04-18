@@ -4,6 +4,9 @@
         <div class="col"><a href="/"><img src="{{ asset("/img/logo.png") }}" alt="" id="logo"></a></div>
         <div class="col text-center"><a href="/projects">Projects</a></div>
         @if (Auth::check())
+            @if (auth()->user()->isAdmin())
+            <div class="col text-center"><a href="/admin">Admin Dashboard</a></div>
+            @endif
         <div class="col text-center"><a href="/dashboard">Dashboard</a></div>
         <div class="col text-center"><a href="/logout">Logout</a></div>
         @else
