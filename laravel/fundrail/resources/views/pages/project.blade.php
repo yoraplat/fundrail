@@ -10,10 +10,17 @@
                     <div class="col-12"><p>{{ $project->intro}}</p></div>
                     <div class="col-12"><p>{{ $project->content}}</p></div>
                     
-            
-            
+                    <div class="col-12">
+                    @foreach($images as $image)
+                        <img class="projectPic" src="{{ asset('storage/' . $image) }}" alt="">
+
+                    @endforeach
+                    </div>
+
+
                     
-                    <div class="col-12 text-right">Already funded: </div>
+
+                    
                 </div>
             </div>
             <h2>Packages</h2>

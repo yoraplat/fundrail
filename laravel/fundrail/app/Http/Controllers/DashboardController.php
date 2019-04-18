@@ -97,7 +97,7 @@ class DashboardController extends Controller
         $images->title = $currentTime;
         if ($request->hasFile('image'))
         {
-            $images->path = $request->file('image')->store('img');
+            $images->path = $request->file('image')->store('img/projects');
         } else {
             $images->path = 'No File';
         }

@@ -11672,6 +11672,10 @@ a.text-dark:focus {
   margin-top: 5px;
 }
 
+.projectPic {
+  width: 150px;
+}
+
 .navbar-laravel {
   background-color: #fff;
   -webkit-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);

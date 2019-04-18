@@ -33,7 +33,6 @@
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
-            <h2>ADD PROJECTS</h2>
         </div>
     </body>
 </html>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Project;
+use App\Image;
 use Illuminate\Support\Facades\Auth;
 
 class ProjectsController extends Controller
@@ -51,7 +52,38 @@ class ProjectsController extends Controller
         ->where('packages.project_id', '=', $id)
         ->get();
 
+        $projectImages = DB::table('image_projects')
+        ->select('image_id as imageId')
+        ->where('image_projects.project_id', '=', $id)
+        ->get()
+        ->toArray();
 
-        return view('pages.project')->with(compact('sponsors', 'project', 'packages'));
+        $images = array();
+        foreach($projectImages as $image)
+        {
+            $imageId = $image->imageId;
+            
+            $imageFound = Image::find($imageId);
+            
+            // Remove img folder from url
+            $images[] = str_replace('img/', '', $imageFound->path);
+        }
+
+/*
+        $images = DB::table('images')
+        ->select('*')
+        ->where('images.id', '=', $projectImages)
+        ->get();
+*/
+/*
+        $images = DB::table('images');
+            foreach($projectImages as $projectImage)
+            {
+                $images->select('images.path');
+                $images->where('images.id', '=', $projectImage);
+                $images->get()->toArray();
+            }
+*/
+        return view('pages.project')->with(compact('sponsors', 'project', 'packages', 'images'));
     }
 }
