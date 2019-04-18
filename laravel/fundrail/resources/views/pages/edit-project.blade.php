@@ -30,6 +30,9 @@
 
                 <div class="form-group">
                     <label for="images" class="btn btn-secondary">Add Images</label>
+                    @foreach ($images as $image)
+                    <a href="/delete-image/{{ $image->imageId }}" class="btn btn-danger">Delete image {{ $image->imageId }}</a>
+                    @endforeach
                 </div>
                 
                 <div class="form-group">

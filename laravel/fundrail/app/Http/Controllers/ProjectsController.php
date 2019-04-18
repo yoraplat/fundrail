@@ -86,4 +86,16 @@ class ProjectsController extends Controller
 */
         return view('pages.project')->with(compact('sponsors', 'project', 'packages', 'images'));
     }
+
+    public function deleteImage($id) {
+        $image = Image::find($id);
+        $image->delete();
+
+        $imageProject = DB::table('image_projects')
+        ->select('*')
+        ->where('image_id', '=', $id)
+        ->delete();
+
+        return redirect()->back();
+    }
 }

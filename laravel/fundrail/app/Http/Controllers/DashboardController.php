@@ -104,6 +104,7 @@ class DashboardController extends Controller
 
         $images->save();
 
+        
 
         // Save image project image (multiple)
         $projectImages = new ImageProject();
@@ -111,6 +112,27 @@ class DashboardController extends Controller
         $projectImages->image_id = $images->id;
         $projectImages->save();
 
+        /*
+        if ($request->hasFile('image'))
+        {
+            foreach ($request->file('image') as $image)
+            {
+                $image = new Image();
+                $image->title = $currentTime;
+                $image->path = $request->file('image')->store('img/projects');
+                $image->save();
+
+                // Save project image (multiple)
+                $projectImages = new ImageProject();
+                $projectImages->project_id = $project->id;
+                $projectImages->image_id = $image->id;
+                $projectImages->save();
+            }
+                
+        } else {
+            $image->path = 'No File';
+        }
+        */
 
         return redirect()->route('user-dashboard');
 
@@ -133,7 +155,13 @@ class DashboardController extends Controller
         ->select('*')
         ->get();
 
-        return view('pages.edit-project', ['project' => $project], ['categories' => $categories]);
+        $images = DB::table('image_projects')
+        ->select('*', \DB::raw('image_id as imageId'))
+        ->join('images', 'image_projects.image_id', '=', 'images.id')
+        ->where('image_projects.project_id', '=', $projectId)
+        ->get();
+
+        return view('pages.edit-project')->with(compact('project', 'categories', 'images'));
     }
 
     public function saveProject(Request $request, $id) {

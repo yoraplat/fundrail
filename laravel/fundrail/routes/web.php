@@ -53,3 +53,7 @@ Route::post('/add-funds', 'FundsController@addFunds')->name('add-funds');
 
 // Project Funds
 Route::post('/add-project-funds', 'FundsController@addProjectFunds')->name('add-project-funds');
+
+// Delete Images
+Route::get('/delete-image/{id}', 'ProjectsController@deleteImage')->name('delete-images');
+
