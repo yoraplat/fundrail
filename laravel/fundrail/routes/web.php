@@ -58,4 +58,7 @@ Route::post('/add-project-funds', 'FundsController@addProjectFunds')->name('add-
 Route::get('/delete-image/{id}', 'ProjectsController@deleteImage')->name('delete-images');
 
 // Backoffice
-Route::get('/admin', 'Backoffice\AdminController@admin')->name('admin');
+Route::get('/admin/projects', 'Backoffice\AdminController@getProjects')->name('admin-projects');
+Route::get('/admin/users', 'Backoffice\AdminController@getUsers')->name('admin-users');
+Route::get('/search', 'Backoffice\AdminController@searchProjects')->name('admin-search');
+Route::get('/delete-user/{id}', 'Backoffice\AdminController@deleteUser')->name('admin-delete-user');
