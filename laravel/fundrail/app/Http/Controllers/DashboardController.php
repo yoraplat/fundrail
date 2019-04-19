@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Project;
 use App\ImageProject;
 use App\Image;
+use App\User;
 use Carbon\Carbon;
 
 class DashboardController extends Controller
@@ -140,11 +141,19 @@ class DashboardController extends Controller
     }
 
     public function deleteProject($id) {
-        $project = Project::find($id);
-        $project->delete();
+
+        $userId = Auth::id();
         
-        return redirect()->route('user-dashboard');
-    }
+        if (Auth::user()->isAdmin() or $userId == $project->user_id)
+        {
+            $project = Project::find($id);
+            $project->delete();
+            
+            return redirect()->route('user-dashboard');
+        } else {
+            return redirect()->back();
+        }
+}
 
     public function editProject($projectId) {
         $id = $projectId;
@@ -165,7 +174,7 @@ class DashboardController extends Controller
     }
 
     public function saveProject(Request $request, $id) {
-
+        $userId = Auth::id();
         $project = Project::findOrFail($id);
         
         request()->validate([
@@ -177,19 +186,20 @@ class DashboardController extends Controller
             
         ]);
 
+        $userId = Auth::id();
 
-        $project->description = $request->input('description');
-        $project->intro = $request->input('intro');
-        $project->content = $request->input('content');
-        $project->category_id = $request->input('category');
-        $project->credit_goal = $request->input('credits');
-        $project->save();
-        
-    
+        if (Auth::user()->isAdmin() or $userId == $project->user_id)
+        {
+            $project->description = $request->input('description');
+            $project->intro = $request->input('intro');
+            $project->content = $request->input('content');
+            $project->category_id = $request->input('category');
+            $project->credit_goal = $request->input('credits');
+            $project->save();
 
-    
-        
-        
-        return redirect()->route('user-dashboard');
+            return redirect()->route('user-dashboard');
+        } else {
+            return redirect()->back();
+        }      
     }
 }
