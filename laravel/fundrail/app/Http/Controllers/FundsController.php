@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\User;
 use App\Sponsor;
 use App\Package;
+use App\Project;
 
 class FundsController extends Controller
 {
@@ -50,10 +51,9 @@ class FundsController extends Controller
 
     public function addProjectFunds(Request $request) {
 
-        $userId = Auth::id();
 
         // Get total credits of user
-        $currentFunds = User::findOrFail($userId)->select('credits')->first();
+        $currentFunds = Auth::user()->credits;
         
         // Get package price
         $packageCost = Package::findOrFail( $request->input('packageId'))
@@ -61,19 +61,37 @@ class FundsController extends Controller
         ->where('id', '=', $request->input('packageId') )
         ->first();
         
-        $user = User::findOrFail($userId);
+        $user = User::findOrFail(Auth::id());
 
         
-        if ($currentFunds->credits >= $packageCost->credit_amount ) {
+        if ($currentFunds >= $packageCost->credit_amount ) {
             $sponsor = new Sponsor();
             $sponser = DB::table('project_sponsors');
             $sponsor->package_id = $request->input('packageId');
-            $sponsor->user_id = $userId;
+            $sponsor->user_id = Auth::id();
             $sponsor->save();
 
-            $user->credits = $currentFunds->credits - $packageCost->credit_amount;
+            $user->credits = $currentFunds - $packageCost->credit_amount;
             $user->save();
 
+            // Admin fee
+
+            $admin = User::select('*')->where('role_type', '=', '1')->first();
+            $admin->credits = $admin->credits + (($packageCost->credit_amount / 100) * 10);
+            $admin->save();
+
+            // Project owner fee
+
+            $project = Project::select('*',\DB::raw('user_id as userId'))
+            ->where('id', '=', $request->input('projectId'))
+            ->first();
+            
+            $projectOwner = User::select('*')
+            ->where('id', '=', $project->userId)
+            ->first();
+
+            $projectOwner->credits = $projectOwner->credits + ($packageCost->credit_amount - (($packageCost->credit_amount / 100) * 10));
+            $projectOwner->save();
 
             return redirect()->back();
         } else {

@@ -9,6 +9,7 @@
             @endif
         <div class="col text-center"><a href="/dashboard">Dashboard</a></div>
         <div class="col text-center"><a href="/logout">Logout</a></div>
+        <p>{{ auth()->user()->name}} <br> Credits: {{ auth()->user()->credits}}</p>
         @else
         <div class="col text-center"><a href="/login">Login</a> / <a href="/register">Register</a></div>
         @endif

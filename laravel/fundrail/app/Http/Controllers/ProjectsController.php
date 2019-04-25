@@ -43,7 +43,7 @@ class ProjectsController extends Controller
         
 
         $project = DB::table('projects')
-        ->select('*', \DB::raw("projects.user_id as userId"))
+        ->select('*', \DB::raw("projects.user_id as userId, projects.final_time as finalTime, projects.id as projectId"))
         ->where('projects.id', '=', $id)
         ->first();
 
@@ -60,6 +60,7 @@ class ProjectsController extends Controller
 
         $images = array();
 
+        var_dump($project->userId);
 
         if (!$images)
         {

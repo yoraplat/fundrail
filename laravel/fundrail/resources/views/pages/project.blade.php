@@ -7,8 +7,8 @@
             <h2>{{ $project->title }}</h2>
             <div class="border">
                 <div class="row">
-                    <div class="col-12"><p>{{ $project->intro}}</p></div>
-                    <div class="col-12"><p>{{ $project->content}}</p></div>
+                    <div class="col-12"><p>{{ $project->intro }}</p></div>
+                    <div class="col-12"><p>{{ $project->content }}</p></div>
                     
                     <div class="col-12">
                     @foreach($images as $image)
@@ -16,6 +16,11 @@
 
                     @endforeach
                     </div>
+                    @if(Carbon\Carbon::parse($project->finalTime)->greaterThan(Carbon\Carbon::now()))
+                    <div class="col-12">Project funding will end {{ Carbon\Carbon::parse($project->finalTime)->format('d-m-Y h:i:s') }}</div>
+                    @else
+                    <div class="col-12">Funding ended</div>
+                    @endif
 
 
                     
@@ -54,6 +59,7 @@
                         {{ csrf_field() }}
                         
                         <input type="hidden" id="packageId" name="packageId" value="{{$package->packageId}}" >
+                        <input type="hidden" id="projectId" name="projectId" value="{{$project->projectId}}" >
                         <div class="col-4"><button class="btn btn-primary" name="form{{ $package->packageId }}">Fund</button></div>
                         @isset($message)
                         <div class="col-4">{{ $message }}</div>
