@@ -33,37 +33,44 @@
             
                 @foreach ($packages as $package)
             <div class="row">
+            <!--
                     <div class="col-4">{{ $package->title }}</div>
                     <div class="col-4">Price: {{ $package->credit_amount }}</div>
                     
-                    <!--
-                    @if ($project->user_id == $project->userId)
+            
+                    
+                    @if ($project->userId == Auth::id())
                     <div class="col-4"><a href="{{ route('add-project-funds') }}" class="btn btn-primary disabled" >Own project</a></div>
                     @elseif (null != Auth::check())
                     <div class="col-4"><a href="{{ route('add-project-funds') }}" class="btn btn-primary">Fund</a></div>
                     @elseif (null == Auth::check())
-                    <div class="col-4"><a href="{{ route('add-project-funds') }}" class="btn btn-primary disabled" >Fund</a></div>
+                    <div class="col-4"><a href="#" class="btn btn-primary disabled" >Fund</a></div>
                     @endif
-
-                    DON'T FUND OWN PROJECTS
-                    -->   
+            -->
+                  
 
 
                     <!--
                     Controller is only taking first package price
                     -->
 
-                    @if (null != Auth::check())
+                    @if ($project->userId == Auth::id())
+                    <div class="col-4">{{ $package->title }}</div>
+                    <div class="col-4">Price: {{ $package->credit_amount }}</div>
+                    <div class="col-4"><a href="{{ route('add-project-funds') }}" class="btn btn-primary disabled" >Own project</a></div>
                     
+                    @elseif (null != Auth::check())
+
+                    <div class="col-4">{{ $package->title }}</div>
+                        <div class="col">Price: {{ $package->credit_amount }}</div>
                     <form method="POST" action="{{route('add-project-funds') }}">
                         {{ csrf_field() }}
                         
                         <input type="hidden" id="packageId" name="packageId" value="{{$package->packageId}}" >
                         <input type="hidden" id="projectId" name="projectId" value="{{$project->projectId}}" >
+                        
+
                         <div class="col-4"><button class="btn btn-primary" name="form{{ $package->packageId }}">Fund</button></div>
-                        @isset($message)
-                        <div class="col-4">{{ $message }}</div>
-                        @endisset
                     </form>
                     
                     

@@ -60,7 +60,6 @@ class ProjectsController extends Controller
 
         $images = array();
 
-        var_dump($project->userId);
 
         if (!$images)
         {
