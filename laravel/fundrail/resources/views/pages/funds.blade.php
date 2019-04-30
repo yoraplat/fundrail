@@ -22,12 +22,24 @@
             </form>
             <h2>Funded Projects</h2>
             <div class="border">
+            @isset($fundedProjects)
+            <div class="row">
+                <div class="col-12">No projects funded yet</div>
+            </div>
+            @endisset
             @foreach ($fundedProjects as $fundedProject)
                 <div class="row">
                     <div class="col-8"><p>{{ $fundedProject->packageTitle }} funded to {{ $fundedProject->projectTitle}} for {{ $fundedProject->packageCredits}} credits</p></div>
                     <div class="col-4"><a href="./project/" class="btn btn-primary">View project</a></div>
                 </div>
                 @endforeach
+            </div>
+
+        <h2>Advertise Projects</h2>
+            <div class="border">
+                <div class="row">
+                    <div class="col-12"><p>Advertise projects using credits</p></div>
+                </div>
             </div>
 
         </div>

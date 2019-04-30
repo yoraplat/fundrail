@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Project;
 use App\Image;
+use App\Comment;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 class ProjectsController extends Controller
@@ -16,6 +18,8 @@ class ProjectsController extends Controller
         
         $projects = Project::select('*', \DB::raw("projects.id as projectId"))
         ->select('*')
+        // Only select projects which are still running
+        ->where('final_time', '>=', Carbon::now())
         ->paginate(15);
 
         return view('pages.projects', ['projects' => $projects]);
@@ -88,7 +92,15 @@ class ProjectsController extends Controller
                 $images->get()->toArray();
             }
 */
-        return view('pages.project')->with(compact('sponsors', 'project', 'packages', 'images'));
+
+        // Get comments
+
+        $comments = Comment::select('*')
+        ->where('project_id', '=', $id)
+        ->join('users', 'comments.user_id', '=', 'users.id')
+        ->get();
+
+        return view('pages.project')->with(compact('sponsors', 'project', 'packages', 'images', 'comments'));
     }
 
     public function deleteImage($id) {

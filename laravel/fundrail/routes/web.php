@@ -57,8 +57,21 @@ Route::post('/add-project-funds', 'FundsController@addProjectFunds')->name('add-
 // Delete Images
 Route::get('/delete-image/{id}', 'ProjectsController@deleteImage')->name('delete-images');
 
+// Analytics
+Route::get('/analytics', 'AnalyticsController@getIndex')->name('analytics-index');
+
+// Download PDF
+Route::get('/downloadPDF/{id}','AnalyticsController@downloadPDF')->name('download-pdf');
+
+// Show PDF
+Route::get('/showPDF/{id}', 'AnalyticsController@showPDF')->name('show-pdf');
+
 // Backoffice
 Route::get('/admin/projects', 'Backoffice\AdminController@getProjects')->name('admin-projects');
 Route::get('/admin/users', 'Backoffice\AdminController@getUsers')->name('admin-users');
 Route::get('/search', 'Backoffice\AdminController@searchProjects')->name('admin-search');
 Route::get('/delete-user/{id}', 'Backoffice\AdminController@deleteUser')->name('admin-delete-user');
+
+// Comments
+Route::post('/post-comment', 'CommentsController@storeComment')->name('store-comment');
+

@@ -8,6 +8,7 @@
         <div class="container" id="showcase-container">
             <h2>All Projects</h2>
             @foreach ($projects as $project)
+            
             <div class="border">
                 <div class="row">
                     <div class="col-6"><h5>{{ $project->title}}</h5></div>

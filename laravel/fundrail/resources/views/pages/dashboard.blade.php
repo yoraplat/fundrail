@@ -15,6 +15,7 @@
                 <div class="row">
                     <div class="col"><h5>{{ $project->title}}</h5></div>
                     <div class="col"><a href="./project/{{ $project->projectId }}" class="btn btn-primary">View Project</a></div>
+                    <div class="col"><a href="" class="btn btn-primary">View Funders</a></div>
                     <div class="col"><a href="./edit-project/{{ $project->projectId }}" class="btn btn-primary">Edit</a></div>
                     <div class="col"><a href="./delete-project/{{ $project->projectId }}" class="btn btn-danger">Delete</a></div>
                 </div>

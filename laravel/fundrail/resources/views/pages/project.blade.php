@@ -30,30 +30,12 @@
             </div>
             <h2>Packages</h2>
             <div class="border">
-            
-                @foreach ($packages as $package)
+            @foreach ($packages as $package)
+            @if(Carbon\Carbon::parse($project->finalTime)->greaterThan(Carbon\Carbon::now()))
+
             <div class="row">
-            <!--
-                    <div class="col-4">{{ $package->title }}</div>
-                    <div class="col-4">Price: {{ $package->credit_amount }}</div>
-                    
-            
-                    
-                    @if ($project->userId == Auth::id())
-                    <div class="col-4"><a href="{{ route('add-project-funds') }}" class="btn btn-primary disabled" >Own project</a></div>
-                    @elseif (null != Auth::check())
-                    <div class="col-4"><a href="{{ route('add-project-funds') }}" class="btn btn-primary">Fund</a></div>
-                    @elseif (null == Auth::check())
-                    <div class="col-4"><a href="#" class="btn btn-primary disabled" >Fund</a></div>
-                    @endif
-            -->
-                  
 
-
-                    <!--
-                    Controller is only taking first package price
-                    -->
-
+<!-- Prevent users to fund own projects -->
                     @if ($project->userId == Auth::id())
                     <div class="col-4">{{ $package->title }}</div>
                     <div class="col-4">Price: {{ $package->credit_amount }}</div>
@@ -78,9 +60,47 @@
                     <div class="col-4"><a href="" class="btn btn-primary disabled" >Fund</a></div>
                     @endif  
                 </div>
-                @endforeach
-                
+                @else
+            <div class="row">
+                <div class="col-4">{{ $package->title }}</div>
+                <div class="col-4">Price: {{ $package->credit_amount }}</div>
+                <div class="col-4"><a href="#" class="btn btn-primary disabled" >Funding ended</a></div>
             </div>
+            @endif
+            @endforeach
+                
+           
+            </div>
+            <div class="border">
+            <div class="row">
+                <div class="col-12">
+                <h2>Comments</h2>
+                @foreach ($comments as $comment)
+                <div class="border">
+                    <div class="row">    
+                        <div class="col-9">
+                            <p>{{ $comment->comment }}</p>
+                        </div>
+                        <div class="col-3">
+                            <p>{{ $comment->name}}</p>
+                            <p>{{ $comment->created_at }}</p>
+                        </div>
+                    </div>
+                </div>
+                @endforeach
+                <hr>
+                    <form action="{{ route('store-comment') }}" method="POST">
+                        @csrf
+                        <div class="form-group">
+                            <textarea class="form-control" name="comment" id="comment" placeholder="Type a comment"></textarea>
+                            <br>
+                            <input type="hidden" id="projectId" name="projectId" value="{{$project->projectId}}" >
+                            <button class="btn btn-primary" type="submit">Comment</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
         </div>
     </body>
 </html>

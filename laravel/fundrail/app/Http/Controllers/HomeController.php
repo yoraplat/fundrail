@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class HomeController extends Controller
 {
@@ -30,6 +31,8 @@ class HomeController extends Controller
         ->inRandomOrder()
         ->take(5)
         ->join('users', 'projects.user_id', '=', 'users.id')
+        // Prevent expired projects
+        ->where('final_time', '>=', Carbon::now())
         ->get();
         return view('welcome', ['projects' => $projects]);
     }
