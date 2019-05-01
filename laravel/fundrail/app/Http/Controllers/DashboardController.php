@@ -149,7 +149,7 @@ class DashboardController extends Controller
             $project = Project::find($id);
             $project->delete();
             
-            return redirect()->route('user-dashboard');
+            return redirect()->back();
         } else {
             return redirect()->back();
         }

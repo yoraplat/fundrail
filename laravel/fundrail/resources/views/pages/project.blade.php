@@ -75,19 +75,19 @@
             <div class="row">
                 <div class="col-12">
                 <h2>Comments</h2>
-                @foreach ($comments as $comment)
-                <div class="border">
-                    <div class="row">    
-                        <div class="col-9">
-                            <p>{{ $comment->comment }}</p>
-                        </div>
-                        <div class="col-3">
-                            <p>{{ $comment->name}}</p>
-                            <p>{{ $comment->created_at }}</p>
+                    @foreach ($comments as $comment)
+                    <div class="border">
+                        <div class="row">    
+                            <div class="col-9">
+                                <p>{{ $comment->comment }}</p>
+                            </div>
+                            <div class="col-3">
+                                <p>{{ $comment->name}}</p>
+                                <p>{{ $comment->created_at }}</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                @endforeach
+                    @endforeach
                 <hr>
                     <form action="{{ route('store-comment') }}" method="POST">
                         @csrf
@@ -95,7 +95,11 @@
                             <textarea class="form-control" name="comment" id="comment" placeholder="Type a comment"></textarea>
                             <br>
                             <input type="hidden" id="projectId" name="projectId" value="{{$project->projectId}}" >
+                            @if (Auth::check())
                             <button class="btn btn-primary" type="submit">Comment</button>
+                            @else
+                            <button class="btn btn-primary disabled" type="submit">Comment</button>
+                            @endif
                         </div>
                     </form>
                 </div>

@@ -71,6 +71,11 @@ Route::get('/admin/projects', 'Backoffice\AdminController@getProjects')->name('a
 Route::get('/admin/users', 'Backoffice\AdminController@getUsers')->name('admin-users');
 Route::get('/search', 'Backoffice\AdminController@searchProjects')->name('admin-search');
 Route::get('/delete-user/{id}', 'Backoffice\AdminController@deleteUser')->name('admin-delete-user');
+Route::get('/delete-category/{id}', 'Backoffice\AdminController@deleteCategory')->name('admin-delete-category');
+Route::get('/admin/categories', 'Backoffice\AdminController@getCategories')->name('admin-categories');
+Route::post('/add-category', 'Backoffice\AdminController@storeCategory')->name('admin-add-category');
+
+
 
 // Comments
 Route::post('/post-comment', 'CommentsController@storeComment')->name('store-comment');
