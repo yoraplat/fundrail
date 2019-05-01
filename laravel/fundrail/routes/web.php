@@ -34,6 +34,7 @@ Route::get('/new-project', 'DashboardController@newProject')->name('new-project'
 Route::get('/edit-project/{projectId}', 'DashboardController@editProject')->name('edit-project');
 Route::post('/create-project', 'DashboardController@createProject')->name('post-new-project');
 Route::post('/save-project/{id}', 'DashboardController@saveProject')->name('save-project');
+Route::post('/search-project', 'ProjectsController@search')->name('search-project');
 Route::get('/delete-project/{projectId}', 'DashboardController@deleteProject')->name('delete-project');
 
 // Get all user packages

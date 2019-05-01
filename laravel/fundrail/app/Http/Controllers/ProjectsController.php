@@ -9,6 +9,7 @@ use App\Image;
 use App\Comment;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Input;
 
 class ProjectsController extends Controller
 {
@@ -101,6 +102,23 @@ class ProjectsController extends Controller
         ->get();
 
         return view('pages.project')->with(compact('sponsors', 'project', 'packages', 'images', 'comments'));
+    }
+
+    public function search(Request $request) {
+        
+
+        $searchValue = Input::get('search');
+        $projectsSearch = Project::select('*')
+        ->where('final_time', '>=', Carbon::now())
+        ->where('title', 'LIKE', '%'.$searchValue.'%')
+        /*
+        ->Orwhere('description', 'LIKE', '%'.$searchValue.'%')  
+        ->Orwhere('intro', 'LIKE', '%'.$searchValue.'%')  
+        ->Orwhere('content', 'LIKE', '%'.$searchValue.'%') 
+        */ 
+        ->paginate(15);
+
+        return view('pages.projects', ['projects' => $projectsSearch]);
     }
 
     public function deleteImage($id) {

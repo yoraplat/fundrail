@@ -6,7 +6,26 @@
     @include('includes.nav')
 
         <div class="container" id="showcase-container">
-            <h2>All Projects</h2>
+            <div class="row">
+                <div class="col"><h2>All Projects</h2></div>
+                <div class="col">
+                    <form action="{{ route('search-project') }}" method="POST">
+                        @csrf
+                        <div class="form-group">
+                            <input type="text" name="search" id="search" placeholder="Search">
+                            <button type="submit" class="btn btn-primary">Search</button>
+                        </div>
+                        <div class="form-group">
+                        <label for="orderBy">Order by:</label>
+                            <select name="orderBy" id="orderBy">
+                                <option value="1">Project Name</option>
+                                <option value="1">Date</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
             @foreach ($projects as $project)
             
             <div class="border">
