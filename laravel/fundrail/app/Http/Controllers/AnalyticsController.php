@@ -8,6 +8,7 @@ use App\User;
 use App\Package;
 use Illuminate\Support\Facades\Auth;
 use PDF;
+use Lavacharts;
 
 class AnalyticsController extends Controller
 {
@@ -19,7 +20,16 @@ class AnalyticsController extends Controller
     public function getIndex() {
 
         $projects = Project::select('*')
-        ->where('user_id', '=', Auth::id())
+        ->where('projects.user_id', '=', Auth::id())
+        
+        ->join('packages', 'projects.id','=', 'packages.project_id' )
+        
+        /*
+        ->join('packages', 'projects.id','=', 'packages.project_id' )
+        ->join('project_sponsors', 'packages.id', '=', 'project_sponsors.package_id')
+        ->join('users', 'project_sponsors.user_id', '=', 'users.id')
+        ->orderBy('projects.id')
+        */
         ->get();
         /*
         $projectPackages = Package::select('*')
@@ -28,6 +38,25 @@ class AnalyticsController extends Controller
         ->where('');
         */
 
+        $data = \Lava::DataTable();
+        $data->addDateColumn('Day of Month')
+                    ->addNumberColumn('Projected')
+                    ->addNumberColumn('Official');
+
+        // Random Data For Example
+        for ($a = 1; $a < 30; $a++)
+        {
+            $rowData = [
+            "2014-8-$a", rand(800,1000), rand(800,1000)
+            ];
+
+            $data->addRow($rowData);
+        }
+
+        \Lava::LineChart('Stocks', $data, [
+        'title' => 'Stock Market Trends'
+        ]);
+        
 
 
         return view('pages.analytics', ['projects' => $projects]);

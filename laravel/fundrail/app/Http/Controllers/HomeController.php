@@ -28,12 +28,17 @@ class HomeController extends Controller
     public function getIndex()
     {
         $projects = DB::table('projects')
+        ->select('*', \DB::raw('projects.id as projectId'))
         ->inRandomOrder()
         ->take(5)
         ->join('users', 'projects.user_id', '=', 'users.id')
         // Prevent expired projects
         ->where('final_time', '>=', Carbon::now())
         ->get();
-        return view('welcome', ['projects' => $projects]);
+
+    $sponsoredProjects = null;  // DB::table('projects')
+
+
+    return view('welcome', ['projects' => $projects] /*, ['sponsoredPorjects' => $sponsoredProjects] */ );
     }
 }

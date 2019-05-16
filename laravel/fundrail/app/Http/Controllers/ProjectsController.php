@@ -108,9 +108,13 @@ class ProjectsController extends Controller
         
 
         $searchValue = Input::get('search');
+        $orderBy = Input::get('orderBy');
+        $order = Input::get('order');
+
         $projectsSearch = Project::select('*')
         ->where('final_time', '>=', Carbon::now())
         ->where('title', 'LIKE', '%'.$searchValue.'%')
+        ->orderBy($orderBy, $order)
         /*
         ->Orwhere('description', 'LIKE', '%'.$searchValue.'%')  
         ->Orwhere('intro', 'LIKE', '%'.$searchValue.'%')  

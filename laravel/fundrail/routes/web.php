@@ -69,6 +69,14 @@ Route::get('/showPDF/{id}', 'AnalyticsController@showPDF')->name('show-pdf');
 
 // Backoffice
 Route::get('/admin/projects', 'Backoffice\AdminController@getProjects')->name('admin-projects');
+    // Posts
+    Route::get('/admin/posts', 'Backoffice\AdminController@getPosts')->name('admin-posts');
+    Route::get('/admin/edit-post/{id}', 'Backoffice\AdminController@editPost')->name('admin-edit-post');
+    Route::get('/admin/new-post', 'Backoffice\AdminController@newPost')->name('admin-new-post');
+    Route::post('/admin/store-post', 'Backoffice\AdminController@storePost')->name('admin-store-post');
+    Route::post('/admin/save-post/{id}', 'Backoffice\AdminController@savePost')->name('admin-save-post');
+    Route::get('/admin/delete-post/{id}', 'Backoffice\AdminController@deletePost')->name('admin-delete-post');
+
 Route::get('/admin/users', 'Backoffice\AdminController@getUsers')->name('admin-users');
 Route::get('/search', 'Backoffice\AdminController@searchProjects')->name('admin-search');
 Route::get('/delete-user/{id}', 'Backoffice\AdminController@deleteUser')->name('admin-delete-user');
