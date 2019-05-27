@@ -21,17 +21,39 @@ class DashboardController extends Controller
 
     public function getDashboard() {
         $id = Auth::id();
-        /*
-        $projects = DB::table('projects')
-        ->select('*')
-        ->join('users', 'projects.user_id', '=', 'users.id')
-        ->where('users.id', '=', $id)
-        ->paginate(15);
-        */
-        $projects = Project::select('*', \DB::raw("projects.id as projectId"))
-                ->join('users', 'projects.user_id', '=', 'users.id')
-                ->where('users.id', '=', $id)
-                ->paginate(5);
+        
+        // $projects = DB::table('projects')
+        // ->select('*')
+        // ->join('users', 'projects.user_id', '=', 'users.id')
+        // ->where('users.id', '=', $id)
+        // ->paginate(15);
+        
+        // $projects = Project::select('*', \DB::raw("projects.id as projectId"))
+        //         ->join('users', 'projects.user_id', '=', 'users.id')
+        //         ->where('users.id', '=', $id)
+        //         ->paginate(5);
+        
+
+
+       $projects = Project::select('*', \DB::raw("projects.id as projectId"))
+                    ->where('user_id', '=', $id)
+                    ->paginate(15);
+
+       foreach($projects as $project) {
+            
+            if(count($project->packages) > 0) {
+                foreach($project->packages as $package)
+                    echo 'Aantal sponsors voor: ' . $project->title . ' (package: ' . $package->title . ') is: ' . count($package->sponsors) . '<br>';
+                if(count($package->sponsors) > 0) {
+
+                    foreach($package->sponsors as $sponsor) {
+                        var_dump($sponsor->name);
+                    }
+                } else {
+                    echo 'No sponsors have been found for ' . $package->title . '<br>';
+                }
+            }
+        } 
 
         
         return view('pages.dashboard', ['projects' => $projects]);

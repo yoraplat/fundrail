@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use App\News;
+use App\Image;
 
 class HomeController extends Controller
 {
@@ -35,10 +37,36 @@ class HomeController extends Controller
         // Prevent expired projects
         ->where('final_time', '>=', Carbon::now())
         ->get();
+        
 
     $sponsoredProjects = null;  // DB::table('projects')
+        $news = DB::table('news')
+        /*
+        ->join('image_posts', 'news.id', '=', 'image_posts.image_id')
+        ->join('images', 'image_posts.image_id', '=', 'images.id')
+        */
+        ->select('news.*')
+        ->get();
 
+        /*
+        $news = News::select('*')
+        ->join('image_posts', 'news.id', '=', 'image_posts.image_id')
+        ->join('images', 'image_posts.image_id', '=', 'images.id')
+        ->limit(7)->get();
 
-    return view('welcome', ['projects' => $projects] /*, ['sponsoredPorjects' => $sponsoredProjects] */ );
+        
+        $images = Image::select('path')
+        ->where('path', 'LIKE', 'img/posts/%')
+        ->first();
+        
+        $images = str_replace('img/', '', $images->path);
+        var_dump('Image urls: ' . $images);
+
+        foreach($news as $new) 
+        {
+            var_dump("post title: " . $new->title);
+        }
+        */
+    return view('welcome')->with(compact( 'news', 'projects'));
     }
 }

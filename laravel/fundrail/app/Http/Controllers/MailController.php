@@ -62,4 +62,5 @@ class MailController extends Controller
         });
     }
     */
+
 }

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+
 use App\User;
 use App\Sponsor;
 use App\Package;
@@ -94,7 +95,7 @@ class FundsController extends Controller
             $projectOwner->credits = $projectOwner->credits + ($packageCost->credit_amount - (($packageCost->credit_amount / 100) * 10));
             $projectOwner->save();
 
-            /*
+            
             
             // Send fund mail
             
@@ -105,12 +106,12 @@ class FundsController extends Controller
         
             Mail::send('emails.funded', $data, function ($message){
 
-                $message->to($projectOwner->email, $projectOwner->name);
-                $message->subjet('New funds!');
+                $message->to('yoram.platteeuw@telenet.be', 'yoram');
+                // $message->subjet('New funds!');
                 $message->from('welcome@sandboxc2b0a7b7b7f04450a6f1fe028cf7fdd7.mailgun.org');
             });
             
-            */
+            
 
             return redirect()->back();
         } else {

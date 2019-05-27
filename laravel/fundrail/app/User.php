@@ -35,4 +35,9 @@ class User extends Authenticatable
     public function isAdmin()    {        
         return $this->role_type === self::ADMIN_TYPE;    
     }
+
+    public function sponsoredProjects()
+    {
+        return $this->belongsToMany('App\Project', 'project_sponsors');
+    }
 }

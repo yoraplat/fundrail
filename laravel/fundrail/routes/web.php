@@ -19,6 +19,7 @@ Route::get('/mail', 'MailController@getMailPage')->name('mail-page');
 
 // Email versturen
 Route::get('/send-mail', 'MailController@sendEmailWelcome')->name('welcome-mail');
+Route::get('/send-funded-email', 'MailController@sendFundEmail')->name('send-funded-email');
 
 
 Auth::routes();
@@ -88,4 +89,8 @@ Route::post('/add-category', 'Backoffice\AdminController@storeCategory')->name('
 
 // Comments
 Route::post('/post-comment', 'CommentsController@storeComment')->name('store-comment');
+
+// Profile
+Route::get('/profile', 'ProfileController@getProfile')->name('get-profile');
+Route::post('/edit-profile', 'ProfileController@editProfile')->name('edit-profile');
 
