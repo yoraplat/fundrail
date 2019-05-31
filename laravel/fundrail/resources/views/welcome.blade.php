@@ -14,7 +14,7 @@
 
             <div class="row actions">
                 <div class="col-4 text-center"><a href="{{ route('new-project') }}" class="btn btn-primary">Get your project funded</a></div>
-                <div class="col-4 text-center"><a href="/projects" class="btn btn-secondary">Browser current projects</a></div>
+                <div class="col-4 text-center"><a href="/projects" class="btn btn-secondary">Browse current projects</a></div>
             </div>
 
         </div>

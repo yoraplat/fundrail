@@ -12,6 +12,16 @@
                     <label for="email">Change Email</label>
                     <input type="text" name="email" class="form-control" value="{{ auth()->user()->email }}"  placeholder="Enter title">
                 </div>
+
+                <div class="form-group">
+                    <label for="password">Current Password <small>(Required to save changes)</small></label>
+                    <input type="password" name="current" class="form-control">
+                </div>
+                
+                <div class="form-group">
+                    <label for="new">New Password <small>(Optional)</small></label>
+                    <input type="password" name="new" class="form-control">
+                </div>
                               
                 <button type="submit" class="btn btn-primary">Save</button>
                 
