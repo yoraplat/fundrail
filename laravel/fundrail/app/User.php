@@ -40,4 +40,8 @@ class User extends Authenticatable
     {
         return $this->belongsToMany('App\Project', 'project_sponsors');
     }
+
+    public function sponsored_user() {
+        return $this->belongsTo(Sponsor::class, 'user_id');
+    }
 }

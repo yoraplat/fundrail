@@ -1,9 +1,9 @@
     @include('includes.header')
     <body>
     @include('includes.nav')
-        <!--
-        <a href="{{ route('mail-page') }}">Send welcome mail</a>
-        -->
+        
+        <!-- <a href="{{ route('welcome-mail') }}">Send welcome mail</a> -->
+       
 
         <div class="container" id="content-container">
             <div class="row">
@@ -31,6 +31,8 @@
                 <div class="row">
                     <div class="col-12"><p>Description {{ $project->description}}</p></div>
                 </div>
+
+                
             </div>
             @endforeach
         </div>
@@ -44,12 +46,10 @@
             </div>
             <div class="row">
                 <div class="col">{{ $post->content }}</div>
-                <!--
-                <div class="col"><img src="{{ asset('storage/' ) }}" alt=""></div>
-                -->
+                <div class="col"><img src="{{ asset('storage/') . $post->image_path }}" alt=""></div>
             </div>
             <div class="row">
-                <div class="col"><a href="#" class="btn btn-primary" >Read More</a></div>
+                <div class="col"><a href="/news/{{ $post->id }}" class="btn btn-primary" >Read More</a></div>
             </div>
         </div>
         @endforeach

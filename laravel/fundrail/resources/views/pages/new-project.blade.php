@@ -30,7 +30,7 @@
 
                 <div class="form-group">
                 <label for="image">Add Images</label>
-                    <input type="file" name="image" multiple>
+                    <input type="file" name="image[]" multiple>
                 </div>
                 
                 <div class="form-group">

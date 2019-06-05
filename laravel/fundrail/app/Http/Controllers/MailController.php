@@ -41,26 +41,4 @@ class MailController extends Controller
     
     return redirect('mail');
     }
-/*
-    public function fundedEmail($projectId) {
-        $project = Project::findOrFail($projectId);
-        $email = Auth::user()->email;
-        $name = Auth::user()->name;
-
-        $projectOwner = User::findOrFail($project->user_id);
-        
-
-        $data = [
-            'title' => $name . ' funded your project',
-            'content' => 'User ' . $name . ' funded your project', 
-        ];
-
-        Mail::send('emails.funded', $data, function ($message){
-            $message->to($projectOwner->email, $projectOwner->name);
-            $message->subjet('New funds!');
-            $message->from('welcome@sandboxc2b0a7b7b7f04450a6f1fe028cf7fdd7.mailgun.org');
-        });
-    }
-    */
-
 }

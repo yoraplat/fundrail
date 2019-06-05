@@ -95,24 +95,29 @@ class FundsController extends Controller
             $projectOwner->credits = $projectOwner->credits + ($packageCost->credit_amount - (($packageCost->credit_amount / 100) * 10));
             $projectOwner->save();
 
-            
-            
+            $email = $projectOwner->email;
+            $name = $projectOwner->name;
+            $projectName = $project->title;
+            $packagePrice = $packageCost->credit_amount;
+            $projectId = $project->id;
+        
             // Send fund mail
             
             $data = [
                 'title' => Auth::user()->name . ' funded your project',
-                'content' => 'User ' . Auth::user()->name . ' funded your project', 
+                'content' => Auth::user()->name . ' funded ' . $projectName . ' for ' . $packagePrice . ' credits.',
+                'name' => $name,
+                'email' => $email,
+                'projectId' => $projectId
             ];
-        
-            Mail::send('emails.funded', $data, function ($message){
 
-                $message->to('yoram.platteeuw@telenet.be', 'yoram');
-                // $message->subjet('New funds!');
+            Mail::send('emails.funded',$data, function ($message) use ($email, $name){
+        
+                $message->to($email, $name);
+                $message->subject('funded');
                 $message->from('welcome@sandboxc2b0a7b7b7f04450a6f1fe028cf7fdd7.mailgun.org');
             });
             
-            
-
             return redirect()->back();
         } else {
             return redirect()->back();

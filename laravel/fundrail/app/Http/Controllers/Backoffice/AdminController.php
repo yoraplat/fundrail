@@ -99,32 +99,27 @@ class AdminController extends Controller
             'content' => 'required|max:255',
         ]);
 
+        
+        $currentTime = Carbon::now();
+
         $post = New News;
 
         $post->title = $request->input('title');
         $post->content = $request->input('content');
         $post->author = auth()->id();
-        $post->save();
-
-        $currentTime = Carbon::now();
-        $image = new Image();
-        $image->title = $currentTime;
+        $post->image_path = $currentTime;
+       
+ 
         
         
         if ($request->hasFile('image'))
         {
-            $image->path = $request->file('image')->store('img/posts');
+            $post->image_path = $request->file('image')->store('img/posts');
         } else {
-            $image->path = 'No File';
+            $post->image_path = 'No File';
         }
-        $image->save();
-        
 
-        $posImages = new ImagePost();
-        $posImages->post_id = $post->id;
-        $posImages->image_id = $image->id;
-        
-        $posImages->save();
+        $post->save();
         
         
 

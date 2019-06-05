@@ -44,15 +44,19 @@
                         <th>Username</th>
                         <th>Package</th>
                         <th>Amount</th>
+                        
                         @foreach($project->packages as $package)
-                        @foreach($package->sponsors as $sponsor)
-                        <tr>
-                            <td>{{ $sponsor->name }}</td>
-                            <td>{{ $package->title }}</td>
-                            <td>{{ $package->credit_amount }}</td>
+                        
+                            @foreach($package->sponsors as $sponsor)
+                            <tr>
+                                <td>{{ App\User::find($sponsor->user_id)->name }}</td>
+                                <td>{{ $package->title }}</td>
+                                <td>{{ $package->credit_amount }} credits</td>
+                            </tr>
+                            @endforeach
+                            
+                        @endforeach
                         </tr>
-                        @endforeach
-                        @endforeach
                     </table>
                 </div>
                 <div class="modal-footer">

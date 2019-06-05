@@ -10,4 +10,8 @@ class Sponsor extends Model
     protected $hidden = [
         'packageId',
     ];
+
+    public function user() {
+        return $this->hasOne(User::class);
+    }
 }

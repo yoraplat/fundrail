@@ -9,7 +9,6 @@ class ProfileController extends Controller
 {
     public function getProfile() {
 
-        var_dump(Auth::user()->password);
         return view('pages.profile');
     }
 

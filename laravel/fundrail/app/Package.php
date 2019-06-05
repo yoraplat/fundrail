@@ -9,8 +9,15 @@ class Package extends Model
     protected $fillable = [
         'title', 'description', 'credit_amount', 'project_id',
     ];
+
+
     public function sponsors()
     {
-        return $this->belongsToMany('App\User', 'project_sponsors', 'id', 'user_id');
+        return $this->hasMany(Sponsor::class, 'package_id', 'id');
+    }
+
+    public function project()
+    {
+        return $this->belongsTo(Project::class);
     }
 }

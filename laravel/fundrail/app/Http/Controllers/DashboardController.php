@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Hash;
 use App\Project;
 use App\ImageProject;
 use App\Image;
@@ -21,41 +24,25 @@ class DashboardController extends Controller
 
     public function getDashboard() {
         $id = Auth::id();
-        
-        // $projects = DB::table('projects')
-        // ->select('*')
-        // ->join('users', 'projects.user_id', '=', 'users.id')
-        // ->where('users.id', '=', $id)
-        // ->paginate(15);
-        
-        // $projects = Project::select('*', \DB::raw("projects.id as projectId"))
-        //         ->join('users', 'projects.user_id', '=', 'users.id')
-        //         ->where('users.id', '=', $id)
-        //         ->paginate(5);
-        
-
-
-       $projects = Project::select('*', \DB::raw("projects.id as projectId"))
+        $projects = Project::select('*', \DB::raw("projects.id as projectId"))
                     ->where('user_id', '=', $id)
                     ->paginate(15);
 
-       foreach($projects as $project) {
-            
-            if(count($project->packages) > 0) {
-                foreach($project->packages as $package)
-                    echo 'Aantal sponsors voor: ' . $project->title . ' (package: ' . $package->title . ') is: ' . count($package->sponsors) . '<br>';
-                if(count($package->sponsors) > 0) {
 
-                    foreach($package->sponsors as $sponsor) {
-                        var_dump($sponsor->name);
-                    }
-                } else {
-                    echo 'No sponsors have been found for ' . $package->title . '<br>';
-                }
-            }
-        } 
+        // Visualize packages and funders
+        // foreach($projects as $project) {
+        //     echo '<a>' . $project->title . '</a><br>';
 
-        
+        //     foreach($project->packages as $package) {
+        //         echo '------' . $package->title . '<br>';
+
+        //         foreach($package->sponsors as $sponsor) {
+        //             echo '--------------' . User::find($sponsor->user_id)->name . '<br>';
+        //         }
+        //     }
+
+        // }
+
         return view('pages.dashboard', ['projects' => $projects]);
     }
 
@@ -79,7 +66,7 @@ class DashboardController extends Controller
             'category' => 'required',
             'credits' => 'required|integer',
             'time' => 'required',
-            // 'image' => 'image|mimes:jpeg,png,jpg,gif,svg',
+            'image[]' => 'image|mimes:jpeg,png,jpg,gif,svg',
         ]);
         
 
@@ -103,59 +90,28 @@ class DashboardController extends Controller
         $project->save();
 
 
-        // Get multiple image file
-        /*
-        if ($request->hasFile('image'))
+
+        if (Input::hasFile('image'))
         {
-            foreach($request->file('image') as $image)
-            {
-                $name=$image->getClientOriginalName();
-                $image->move(public_path().'/img/', $name);  
-                $data[] = $name;  
-            }
-        }
-        */
+            
 
-        $images = new Image();
-        $images->title = $currentTime;
-        if ($request->hasFile('image'))
-        {
-            $images->path = $request->file('image')->store('img/projects');
-        } else {
-            $images->path = 'No File';
-        }
-
-        $images->save();
-
-        
-
-        // Save image project image (multiple)
-        $projectImages = new ImageProject();
-        $projectImages->project_id = $project->id;
-        $projectImages->image_id = $images->id;
-        $projectImages->save();
-
-        /*
-        if ($request->hasFile('image'))
-        {
-            foreach ($request->file('image') as $image)
+            foreach(Input::file('image') as $file)
             {
                 $image = new Image();
-                $image->title = $currentTime;
-                $image->path = $request->file('image')->store('img/projects');
+                $storagePath = Storage::put('img/projects/', $file);
+                $storageName = basename($storagePath);
+                $image->title = $storageName;
+                $image->path = 'img/projects/' . $storageName ;
                 $image->save();
 
-                // Save project image (multiple)
-                $projectImages = new ImageProject();
-                $projectImages->project_id = $project->id;
-                $projectImages->image_id = $image->id;
-                $projectImages->save();
+                // Save project images to pivot table
+                $projectImage = new ImageProject();
+                $projectImage->project_id = $project->id;
+                $projectImage->image_id = $image->id;
+                $projectImage->save();
             }
-                
-        } else {
-            $image->path = 'No File';
         }
-        */
+        
 
         return redirect()->route('user-dashboard');
 

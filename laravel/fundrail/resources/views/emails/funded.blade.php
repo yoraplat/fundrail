@@ -10,7 +10,8 @@
 </style>
 <body>
     <h1>You have a new funder!</h1>
-    <h2>{{ $data->title }}</h2>
-    <p>{{ $data->content }}</p>
+    <h2>{{ $title }}</h2>
+    <p>{{ $content }}</p>
+    <a href="http://127.0.0.1:8000/project/{{ $projectId }}">Check project fundings</a>
 </body>
 </html>
