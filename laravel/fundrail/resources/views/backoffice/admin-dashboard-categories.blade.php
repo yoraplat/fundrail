@@ -11,9 +11,9 @@
                 </div>
             </div>
             @foreach ($categories as $category)
-            <div class="border">
+            <div class="border mb-4">
                 
-                <div class="row">
+                <div class="row mb-2">
                     <div class="col-12"><h4>{{ $category->name }}</h4></div>
                     <div class="col-6"><a href="{{ route('admin-delete-category', ['id' => $category->id]) }}" class="btn btn-danger">Delete</a></div>
                 </div>

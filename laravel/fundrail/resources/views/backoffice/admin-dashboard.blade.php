@@ -22,9 +22,9 @@
             </form>
 -->
             @foreach ($projects as $project)
-            <div class="border">
+            <div class="border mb-4">
                 
-                <div class="row">
+                <div class="row mb-2">
                     <div class="col-12"><h4>{{ $project->title }}</h4></div>
                     <div class="col-3"><h4>Author: {{ $project->name }}</h4></div>
                     <div class="col-3"><a href="/project/{{ $project->projectId }}" class="btn btn-primary">View Project</a></div>

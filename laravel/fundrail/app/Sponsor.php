@@ -14,4 +14,8 @@ class Sponsor extends Model
     public function user() {
         return $this->hasOne(User::class);
     }
+
+    public function fundings() {
+        return $this->belongsTo('App\Package', 'package_id', 'id');
+    }
 }

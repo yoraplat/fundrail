@@ -9,9 +9,9 @@ class ImageProject extends Model
     protected $table = 'image_projects';
     protected $fillable = ['project_id', 'image_id'];
 
-    public function images()
+    public function project_image()
     {
-        return $this->hasMany('App\Image');
+        return $this->hasOne('App\Image', 'id');
     }
 
     public function project()

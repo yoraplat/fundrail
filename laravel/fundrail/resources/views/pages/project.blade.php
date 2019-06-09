@@ -21,11 +21,13 @@
                     @else
                     <div class="col-12">Funding ended</div>
                     @endif
-
-
                     
-
-                    
+                    <div class="col-12 mt-4 mb-4">
+                    <h5 class="">Total percentage funded <small>(Goal: {{$project->credit_goal}} credits)</small></h5>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: {{$total}}%" aria-valuenow="{{ $total }}" aria-valuemin="0" aria-valuemax="100">{{$total}}%</div>
+                        </div>
+                    </div>                   
                 </div>
             </div>
 
@@ -98,5 +100,6 @@
             </div>
         </div>
         </div>
+        @include('includes.footer')
     </body>
 </html>

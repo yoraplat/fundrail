@@ -29,10 +29,13 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="images" class="btn btn-secondary">Add Images</label>
                     @foreach ($images as $image)
-                    <a href="/delete-image/{{ $image->imageId }}" class="btn btn-danger">Delete image {{ $image->imageId }}</a>
+                    <div class="d-inline-block">
+                        <img class="projects-thumbnail d-block" src="{{ asset('storage/'). '/' . $image->path = str_replace('img/', '', $image->path) }}" alt="">
+                        <a href="/delete-image/{{ $image->imageId }}" class="btn btn-danger mt-2">Delete image </a>
+                    </div>
                     @endforeach
+                    
                 </div>
                 
                 <div class="form-group">
@@ -42,7 +45,7 @@
                 
                 <div class="form-group">
                     <label for="time">Funding Ends On</label>
-                    <input type="date" class="form-control" name="time" placeholder="time" value="" readonly>
+                    <input type="date" class="form-control" name="time" placeholder="time" value="{{ $project->final_time }}" readonly>
                 </div>
                 
                 <div class="form-group">
@@ -58,5 +61,6 @@
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
         </div>
+        @include('includes.footer')
     </body>
 </html>

@@ -19,38 +19,32 @@ class ProjectsController extends Controller
         
         $projects = Project::select('*', \DB::raw("projects.id as projectId"))
         ->select('*')
-        // Only select projects which are still running
+          // Only select projects which are still running
         ->where('final_time', '>=', Carbon::now())
         ->paginate(15);
 
+        // foreach($projects as $project) {
+        //     echo $project;
+        //     foreach($project->project_images as $image) {
+        //         echo '----' . $image->path . '<br>';
+
+        //     }
+        // }
+
+        
+
         return view('pages.projects', ['projects' => $projects]);
     }   
-    /*
-        $projects = Project::select('*', \DB::raw("projects.id as projectId"))
-        ->select('*')
-        ->join('users', 'projects.user_id', '=', 'users.id')
-        ->paginate(15);
 
-        return view('pages.projects', ['projects' => $projects]);
-        
-    }
-*/
     public function getProjectById($id) {
-        /*
-        $sponsors = DB::table('packages')
-        ->select(\DB::raw('*, SUM(packages.credit_amount) as totalAmount'))
-        ->join('project_sponsors', 'packages.id', '=', 'project_sponsors.package_id')
-        ->where('packages.project_id', '=', $id)
-        ->groupBy('packages.id')
-        ->get();
-        */
+
 
         
-
-        $project = DB::table('projects')
+        $project = Project::find($id)
         ->select('*', \DB::raw("projects.user_id as userId, projects.final_time as finalTime, projects.id as projectId"))
         ->where('projects.id', '=', $id)
         ->first();
+
 
         $packages = DB::table('packages')
         ->select('*',\DB::raw("packages.id as packageId"))
@@ -65,6 +59,18 @@ class ProjectsController extends Controller
 
         $images = array();
 
+        $total = 0;
+
+        foreach($project->sponsors as $sponsor) {
+            $total = $total + $sponsor->fundings->credit_amount;
+        }
+        $total = round(($total / $project->credit_goal) * 100, 1);
+        
+        if ($total > 100) {
+            $total = 100;
+        } elseif($total < 1) {
+            $total = 0;
+        }
 
         if (!$images)
         {
@@ -74,25 +80,10 @@ class ProjectsController extends Controller
                 $imageFound = Image::find($imageId);   
                 // Remove img folder from url
                 $images[] = str_replace('img/', '', $imageFound->path);
+                
             }
         }
-        
 
-/*
-        $images = DB::table('images')
-        ->select('*')
-        ->where('images.id', '=', $projectImages)
-        ->get();
-*/
-/*
-        $images = DB::table('images');
-            foreach($projectImages as $projectImage)
-            {
-                $images->select('images.path');
-                $images->where('images.id', '=', $projectImage);
-                $images->get()->toArray();
-            }
-*/
 
         // Get comments
 
@@ -101,7 +92,7 @@ class ProjectsController extends Controller
         ->join('users', 'comments.user_id', '=', 'users.id')
         ->get();
 
-        return view('pages.project')->with(compact('sponsors', 'project', 'packages', 'images', 'comments'));
+        return view('pages.project')->with(compact('sponsors', 'project', 'packages', 'images', 'comments', 'total'));
     }
 
     public function search(Request $request) {

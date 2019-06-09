@@ -20,11 +20,16 @@ class Project extends Authenticatable
     ];
 
     public function sponsors() {
-        return $this->hasManyThrough(Sponsor::class, Package::class, 'project_id', 'package_id', 'id', 'id');
+        return $this->hasManyThrough('App\Sponsor', 'App\Package', 'project_id', 'package_id', 'id', 'id');
     }
 
+    public function images() {
+        return $this->hasMany('App\ImageProject', 'image_id');
+    }
+
+
     public function packages() {
-        return $this->hasMany(Package::class, 'project_id', 'id');
+        return $this->hasMany('App\Package', 'project_id', 'id');
     }
 
 
@@ -34,7 +39,7 @@ class Project extends Authenticatable
 
     public function project_images() 
     {
-        return $this->hasManyThrough(Image::class, ImageProject::class, "project_id", "image_id", "id", "id");
+        return $this->hasManyThrough(Image::class, ImageProject::class, "project_id", "id", "id", "id");
     }
 
     /**

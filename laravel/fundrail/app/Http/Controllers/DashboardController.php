@@ -100,7 +100,7 @@ class DashboardController extends Controller
                 $image = new Image();
                 $storagePath = Storage::put('img/projects/', $file);
                 $storageName = basename($storagePath);
-                $image->title = $storageName;
+                $image->title = $currentTime;
                 $image->path = 'img/projects/' . $storageName ;
                 $image->save();
 

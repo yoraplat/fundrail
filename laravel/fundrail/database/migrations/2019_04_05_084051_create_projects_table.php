@@ -18,7 +18,7 @@ class CreateProjectsTable extends Migration
             $table->string('title');
             $table->string('description');
             $table->string('intro');
-            $table->string('content');
+            $table->string('content', 2000);
             $table->integer('user_id');
             $table->integer('category_id');
             $table->integer('credit_goal');

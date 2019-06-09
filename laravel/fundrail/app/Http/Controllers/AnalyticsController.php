@@ -22,22 +22,19 @@ class AnalyticsController extends Controller
         $projects = Project::select('*')
         ->where('projects.user_id', '=', Auth::id())
         
-        ->join('packages', 'projects.id','=', 'packages.project_id' )
-        
-        /*
-        ->join('packages', 'projects.id','=', 'packages.project_id' )
-        ->join('project_sponsors', 'packages.id', '=', 'project_sponsors.package_id')
-        ->join('users', 'project_sponsors.user_id', '=', 'users.id')
-        ->orderBy('projects.id')
-        */
         ->get();
-        /*
-        $projectPackages = Package::select('*')
-        ->where('project_id', '=', );
-        $funders = User::select('*')
-        ->where('');
-        */
 
+        
+        foreach($projects as $project){
+            $total = 0;
+            foreach($project->sponsors as $sponsor) {
+                $total = $total + $sponsor->fundings->credit_amount;
+            }
+            $project->total = $total;
+        }
+
+        
+        
         $data = \Lava::DataTable();
         $data->addDateColumn('Day of Month')
                     ->addNumberColumn('Projected')

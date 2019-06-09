@@ -11676,8 +11676,45 @@ a.text-dark:focus {
   width: 300px;
 }
 
+.card-horizontal {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-flex: 1;
+      -ms-flex: 1 1 auto;
+          flex: 1 1 auto;
+}
+
+.projects-thumbnail {
+  max-width: 200px;
+}
+
 #nav-container {
   width: 100vw;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+#wrap {
+  min-height: 100%;
+}
+
+#main {
+  overflow: auto;
+  padding-bottom: 150px;
+  /* this needs to be bigger than footer height*/
+}
+
+.footer {
+  position: relative;
+  margin-top: -150px;
+  /* negative value of footer height */
+  height: 150px;
+  clear: both;
+  padding-top: 20px;
 }
 
 .navbar-laravel {

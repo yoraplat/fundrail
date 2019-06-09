@@ -25,7 +25,7 @@
             <div class="row">
                 <div class="col">{{ $post->content }}</div>
                 
-                <div class="col"><img src="{{ asset('storage/' ) }}" alt=""></div>
+                <div class="col"><img src="{{ asset('storage/') . $post->image_path }}" alt=""></div>
                 
             </div>
             <div class="row">
@@ -35,5 +35,6 @@
         @endforeach
 
         </div>
+        @include('includes.footer')
     </body>
 </html>

@@ -18,15 +18,10 @@ class PostController extends Controller
 
     public function getPostById($id) {
         $post = News::findOrFail($id);
+        $newPath = str_replace('img', '', $post->image_path);
+        $post->image_path = $newPath;
 
-        $image = DB::table('image_posts')
-        ->select('*')
-        ->where('post_id', '=', $id)
-        ->join('images', 'image_id' , '=', 'images.id')
-        ->first();
-
-        $image->path = str_replace('img/', '', $image->path);
-
-        return view('pages.post', ['post' => $post], ['image' => $image]);
+        // dd($post->image_path);
+        return view('pages.post', ['post' => $post]);
     }
 }

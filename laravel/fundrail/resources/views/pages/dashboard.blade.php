@@ -56,7 +56,7 @@
                             @endforeach
                             
                         @endforeach
-                        </tr>
+                        
                     </table>
                 </div>
                 <div class="modal-footer">
@@ -66,12 +66,7 @@
             </div>
             </div>
             @endforeach
-
-
-
-
-            
-            
         </div>
+        @include('includes.footer')
     </body>
 </html>
