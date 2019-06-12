@@ -32,6 +32,9 @@
       <li class="nav-item">
         <a class="nav-link" href="/projects">Projects</a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/news">News</a>
+      </li>
       @if (Auth::check())
       <li class="nav-item">
         <a class="nav-link" href="/dashboard">Dashboard</a>

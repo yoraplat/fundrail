@@ -11689,6 +11689,10 @@ a.text-dark:focus {
   max-width: 200px;
 }
 
+.postImg {
+  max-width: 60%;
+}
+
 #nav-container {
   width: 100vw;
 }
